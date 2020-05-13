@@ -82,7 +82,7 @@
 
 		// If an ID was actually given, find the item and update each property
 		if (id) {
-			for (var i = 0; i < todos.length; i++) {
+			for (var i = 0, l = todos.length; i < l; i++) {
 				if (todos[i].id === id) {
 					for (var key in updateData) {
 						todos[i][key] = updateData[key];
