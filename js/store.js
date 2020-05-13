@@ -115,13 +115,13 @@
 		var todos = data.todos;
 		var todoId;
 		
-		for (var i = 0; i < todos.length; i++) {
+		for (var i = 0, l = todos.length; i < l; i++) {
 			if (todos[i].id == id) {
 				todoId = todos[i].id;
 			}
 		}
 
-		for (var i = 0; i < todos.length; i++) {
+		for (var i = 0, l = todos.length; i < l; i++) {
 			if (todos[i].id == todoId) {
 				todos.splice(i, 1);
 			}
