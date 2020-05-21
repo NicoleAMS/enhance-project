@@ -60,15 +60,20 @@ describe('controller', function () {
 
 	xit('should show entries on start-up', function () {
 		// TODO: write test
+		// tests Controller.prototype.showAll() 
 	});
 
 	describe('routing', function () {
 
+		// tests Controller.prototype.setView()
 		it('should show all entries without a route', function () {
+			// it should call the view's render method with 'showEntries' if there's no route
 			var todo = {title: 'my todo'};
 			setUpModel([todo]);
 
 			subject.setView('');
+			// subject.setView('') -> subject._updateFilterState(page) -> set subject.activeRoute to 'All' -> 
+			// subject._filter -> subject['show' + activeRoute]() -> subject.showAll -> subject.view.render('showEntries'..)
 
 			expect(view.render).toHaveBeenCalledWith('showEntries', [todo]);
 		});
