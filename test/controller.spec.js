@@ -6,6 +6,7 @@ describe('controller', function () {
 	var subject, model, view;
 
 	var setUpModel = function (todos) {
+		// read does not do this.storage.find(query, callback) in order to find active/completed todos
 		model.read.and.callFake(function (query, callback) {
 			callback = callback || query;
 			callback(todos);
@@ -61,11 +62,12 @@ describe('controller', function () {
 	xit('should show entries on start-up', function () {
 		// TODO: write test
 		// tests Controller.prototype.showAll() 
+		// without a todo -> no entries
 	});
 
 	describe('routing', function () {
 
-		// tests Controller.prototype.setView()
+		// tests Controller.prototype.setView() -> it should call showAll() and then view.render('showEntries, ...)
 		it('should show all entries without a route', function () {
 			// it should call the view's render method with 'showEntries' if there's no route
 			var todo = {title: 'my todo'};
@@ -74,7 +76,6 @@ describe('controller', function () {
 			subject.setView('');
 			// subject.setView('') -> subject._updateFilterState(page) -> set subject.activeRoute to 'All' -> 
 			// subject._filter -> subject['show' + activeRoute]() -> subject.showAll -> subject.view.render('showEntries'..)
-
 			expect(view.render).toHaveBeenCalledWith('showEntries', [todo]);
 		});
 
@@ -87,6 +88,7 @@ describe('controller', function () {
 			expect(view.render).toHaveBeenCalledWith('showEntries', [todo]);
 		});
 
+		// tests Controller.prototype.setView() -> it should call showActive() and then view.render('showEntries, ...)
 		xit('should show active entries', function () {
 			// TODO: write test
 		});

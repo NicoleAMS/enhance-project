@@ -74,6 +74,7 @@
 	Controller.prototype.showActive = function () {
 		var self = this;
 		self.model.read({ completed: false }, function (data) {
+			// data -> filtered data array with only active todos
 			self.view.render('showEntries', data);
 		});
 	};

@@ -47,6 +47,7 @@
 		var todos = JSON.parse(localStorage[this._dbName]).todos;
 
 		callback.call(this, todos.filter(function (todo) {
+			// query is an object with completed: true/false or id: [number] in it
 			for (var q in query) {
 				if (query[q] !== todo[q]) {
 					return false;
