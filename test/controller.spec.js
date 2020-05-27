@@ -59,10 +59,15 @@ describe('controller', function () {
 		subject = new app.Controller(model, view);
 	});
 
-	xit('should show entries on start-up', function () {
+	it('should show entries on start-up', function () {
 		// TODO: write test
 		// tests Controller.prototype.showAll() 
-		// without a todo -> no entries
+		// without a todo -> no entries -> it doesn't show anything other than the input field. 
+		// Main and footer sections both have a display:none; This is set in View -> render -> ContentBlockVisibility
+		// Controller -> showAll -> data is an empty array -> setUpModel should be called with empty array
+		setUpModel([]);
+		subject.setView('');
+		expect(view.render).toHaveBeenCalledWith('showEntries', []);
 	});
 
 	describe('routing', function () {
