@@ -173,6 +173,7 @@
 	View.prototype.bind = function (event, handler) {
 		var self = this;
 		if (event === 'newTodo') {
+			// runs on loading the page 
 			$on(self.$newTodo, 'change', function () {
 				handler(self.$newTodo.value);
 			});
@@ -183,6 +184,7 @@
 			});
 
 		} else if (event === 'toggleAll') {
+			// runs on reloading the page when all todos are checked as completed 
 			$on(self.$toggleAll, 'click', function () {
 				handler({completed: this.checked});
 			});
