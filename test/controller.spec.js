@@ -178,8 +178,11 @@ describe('controller', function () {
 		expect(view.render).toHaveBeenCalledWith('setFilter', '');
 	});
 
-	xit('should highlight "Active" filter when switching to active view', function () {
+	it('should highlight "Active" filter when switching to active view', function () {
 		// TODO: write test
+		setUpModel([{title: 'active todo', completed: false}]);
+		subject.setView('#/active');
+		expect(view.render).toHaveBeenCalledWith('setFilter', 'active');
 	});
 
 	xdescribe('toggle all', function () {
