@@ -197,13 +197,23 @@ describe('controller', function () {
 			setUpModel(todos);
 			subject.setView('');
 			view.trigger('toggleAll', {completed: true});
-			
+
 			expect(model.update).toHaveBeenCalledWith(1, {completed: true}, jasmine.any(Function));
 			expect(model.update).toHaveBeenCalledWith(2, {completed: true}, jasmine.any(Function));
 		});
 
-		xit('should update the view', function () {
+		it('should update the view', function () {
 			// TODO: write test
+			var todos = [
+				{title: 'todo 1', completed: true, id: 1},
+				{title: 'todo 2', completed: false, id: 2}
+			];
+
+			setUpModel(todos);
+			subject.setView('');
+			view.trigger('toggleAll', {completed: false});
+
+			expect(view.render).toHaveBeenCalledWith('elementComplete', {id: 1, completed: false});
 		});
 	});
 
