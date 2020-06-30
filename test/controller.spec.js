@@ -13,10 +13,11 @@ describe('controller', function () {
 			let data = todos;
 			if (queryType === 'object') {
 				data = [];
-				let d = todos.find((todo) => {
-					return todo.completed === query.completed;
+				todos.map((todo) => {
+					if (todo.completed === query.completed) {
+						data.push(todo);
+					}
 				});
-				data.push(d);
 			}
 			callback = callback || query;
 			callback(data);
@@ -185,12 +186,23 @@ describe('controller', function () {
 		expect(view.render).toHaveBeenCalledWith('setFilter', 'active');
 	});
 
-	xdescribe('toggle all', function () {
+	describe('toggle all', function () {
 		it('should toggle all todos to completed', function () {
 			// TODO: write test
+			var todos = [
+				{title: 'todo 1', completed: false, id: 1},
+				{title: 'todo 2', completed: false, id: 2}
+			];
+
+			setUpModel(todos);
+			subject.setView('');
+			view.trigger('toggleAll', {completed: true});
+			
+			expect(model.update).toHaveBeenCalledWith(1, {completed: true}, jasmine.any(Function));
+			expect(model.update).toHaveBeenCalledWith(2, {completed: true}, jasmine.any(Function));
 		});
 
-		it('should update the view', function () {
+		xit('should update the view', function () {
 			// TODO: write test
 		});
 	});
