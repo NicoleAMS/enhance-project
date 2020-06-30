@@ -171,8 +171,11 @@ describe('controller', function () {
 		});
 	});
 
-	xit('should highlight "All" filter by default', function () {
+	it('should highlight "All" filter by default', function () {
 		// TODO: write test
+		setUpModel([]);
+		subject.setView('');
+		expect(view.render).toHaveBeenCalledWith('setFilter', '');
 	});
 
 	xit('should highlight "Active" filter when switching to active view', function () {
