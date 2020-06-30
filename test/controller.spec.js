@@ -5,11 +5,21 @@ describe('controller', function () {
 
 	var subject, model, view;
 
+	// setUpModel creates a fake model with fake functions to imitate the real model without having to hit the database and pollute it with fake data. It does mean you are testing the fakers but in theory, if a real model or method has the same interface, it should just work  
 	var setUpModel = function (todos) {
-		// read does not do this.storage.find(query, callback) in order to find active/completed todos
+		// originally, read did not hit the store to find(query, callback) active/completed todos, so I'm faking that here
 		model.read.and.callFake(function (query, callback) {
+			var queryType = typeof query;
+			let data = todos;
+			if (queryType === 'object') {
+				data = [];
+				let d = todos.find((todo) => {
+					return todo.completed === query.completed;
+				});
+				data.push(d);
+			}
 			callback = callback || query;
-			callback(todos);
+			callback(data);
 		});
 
 		model.getCount.and.callFake(function (callback) {
@@ -94,8 +104,16 @@ describe('controller', function () {
 		});
 
 		// tests Controller.prototype.setView() -> it should call showActive() and then view.render('showEntries, ...)
-		xit('should show active entries', function () {
+		it('should show active entries', function () {
 			// TODO: write test
+			var activeTodo = {title: 'active todo', completed: false};
+			var completedTodo = {title: 'completed todo', completed: true};
+
+			setUpModel([activeTodo, completedTodo]);
+			subject.setView('#/active');
+
+			expect(model.read).toHaveBeenCalledWith({completed: false}, jasmine.any(Function));
+			expect(view.render).toHaveBeenCalledWith('showEntries', [activeTodo]);
 		});
 
 		xit('should show completed entries', function () {
