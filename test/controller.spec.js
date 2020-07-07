@@ -13,11 +13,11 @@ describe('controller', function () {
 			let data = todos;
 			if (queryType === 'object') {
 				data = [];
-				todos.map((todo) => {
-					if (todo.completed === query.completed) {
-						data.push(todo);
+				for (var i = 0; i < todos.length; i++) {
+					if (todos[i].completed === query.completed) {
+						data.push(todos[i]);
 					}
-				});
+				}
 			}
 			callback = callback || query;
 			callback(data);
