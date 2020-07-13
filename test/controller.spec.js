@@ -5,7 +5,7 @@ describe('controller', function () {
 
 	var subject, model, view;
 
-	// setUpModel creates a fake model with fake functions to imitate the real model without having to hit the database and pollute it with fake data. It does mean you are testing the fakers but in theory, if a real model or method has the same interface, it should just work  
+	// setUpModel adds fake functions to the spy model to imitate the real model without having to hit the database and pollute it with fake data.
 	var setUpModel = function (todos) {
 		// originally, read did not hit the store to find(query, callback) active/completed todos, so I'm faking that here
 		model.read.and.callFake(function (query, callback) {
@@ -72,10 +72,6 @@ describe('controller', function () {
 
 	it('should show entries on start-up', function () {
 		// TODO: write test
-		// tests Controller.prototype.showAll() 
-		// without a todo -> no entries -> it doesn't show anything other than the input field. 
-		// Main and footer sections both have a display:none; This is set in View -> render -> ContentBlockVisibility
-		// Controller -> showAll -> data is an empty array -> setUpModel should be called with empty array
 		setUpModel([]);
 		subject.setView('');
 		expect(view.render).toHaveBeenCalledWith('showEntries', []);
@@ -83,15 +79,12 @@ describe('controller', function () {
 
 	describe('routing', function () {
 
-		// tests Controller.prototype.setView() -> it should call showAll() and then view.render('showEntries, ...)
 		it('should show all entries without a route', function () {
 			// it should call the view's render method with 'showEntries' if there's no route
 			var todo = {title: 'my todo'};
 			setUpModel([todo]);
 
 			subject.setView('');
-			// subject.setView('') -> subject._updateFilterState(page) -> set subject.activeRoute to 'All' -> 
-			// subject._filter -> subject['show' + activeRoute]() -> subject.showAll -> subject.view.render('showEntries'..)
 			expect(view.render).toHaveBeenCalledWith('showEntries', [todo]);
 		});
 
@@ -104,7 +97,6 @@ describe('controller', function () {
 			expect(view.render).toHaveBeenCalledWith('showEntries', [todo]);
 		});
 
-		// tests Controller.prototype.setView() -> it should call showActive() and then view.render('showEntries, ...)
 		it('should show active entries', function () {
 			// TODO: write test
 			var activeTodo = {title: 'active todo', completed: false};
